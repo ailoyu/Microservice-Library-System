@@ -1,0 +1,5 @@
+package com.twinkle.bookservice.command.aggregate;
+
+public class BookAgregate {
+	
+}

@@ -1,0 +1,74 @@
+package com.twinkle.userservice;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import com.twinkle.userservice.controller.UserController;
+import com.twinkle.userservice.data.User;
+import com.twinkle.userservice.model.UserDTO;
+import com.twinkle.userservice.service.UserService;
+
+@ExtendWith(SpringExtension.class)
+class UserControllerTest {
+	
+	@Mock
+	private UserService userService;
+	
+	@InjectMocks // Test Class nào Inject Mocks class đó
+	private UserController userController;
+	
+	
+	private User user;
+	private UserDTO userDTO;
+	
+	@BeforeEach
+	public void setUp() {// Set up môi trường, biến, khởi tạo các thứ..
+		
+		 user = new User(1L,"dev@gmail.com","123456","employeeID");
+	     userDTO = new UserDTO(1L,"dev@gmail.com","123456","employeeID","token","refresh");
+		
+		// do userService dc inject trong class userController
+		ReflectionTestUtils.setField(userController, "userService", userService);
+		
+	}
+	
+	@Test
+	void getAllUser() {
+		List<User> users = new ArrayList<>();
+		users.add(user);
+		
+		// khi gọi function này trả về list users đã tạo ở trên
+		when(userService.getAllUser()).thenReturn(users);
+		
+		// Kết quả function userController.getAllUser() phải giống list users đã tạo ở trên
+		Assertions.assertEquals(users, userController.getAllUser());
+	}
+	
+	@Test
+	void addUser() {
+		when(userService.saveUser(UserDTO.entityToDTO(user))).thenReturn(UserDTO.entityToDTO(user));
+		Assertions.assertEquals(user, userController.addUser(user)); 
+	}
+	
+	@Test
+	void loginUser() {
+		// Đăng nhập chuỗi bất kỳ
+		when(userService.login(anyString(), anyString())).thenReturn(userDTO);
+		Assertions.assertEquals(userDTO, userController.loginUser(userDTO));
+	}
+	
+	
+	
+}

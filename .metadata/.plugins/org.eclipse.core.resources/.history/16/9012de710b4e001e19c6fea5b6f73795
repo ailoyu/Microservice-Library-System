@@ -1,0 +1,34 @@
+package com.twinkle.userservice;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import com.twinkle.userservice.controller.UserController;
+import com.twinkle.userservice.service.UserService;
+
+@ExtendWith(SpringExtension.class)
+class UserControllerTest {
+	
+	@Mock
+	private UserService userService;
+	
+	@InjectMocks // Test Class nào Inject Mocks class đó
+	private UserController userController;
+	
+	
+	@BeforeEach
+	public void setUp() {
+		// Set up môi trường, biến, khởi tạo các thứ..
+		
+		// do userService dc inject trong userController
+		ReflectionTestUtils.setField(userController, "userService", userService);
+	}
+	
+	
+	
+	
+}

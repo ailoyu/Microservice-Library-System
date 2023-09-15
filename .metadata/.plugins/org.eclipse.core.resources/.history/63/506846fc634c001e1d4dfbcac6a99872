@@ -1,0 +1,7 @@
+#tên server
+spring.application.name=discovery-server
+# vì là server nên ko ?? service phát hi?n ra nó
+eureka.client.register-with-eureka=false
+#  vì là server nên ko c?n k?t n?i vs service khác
+eureka.client.fetch-registry=false
+server.port=8761

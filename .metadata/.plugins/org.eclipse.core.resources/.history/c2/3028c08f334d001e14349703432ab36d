@@ -1,0 +1,5 @@
+package com.twinkle.borrowingservice.config;
+
+public class AxonConfig {
+
+}

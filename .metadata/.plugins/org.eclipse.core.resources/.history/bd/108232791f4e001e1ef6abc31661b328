@@ -1,0 +1,33 @@
+package com.twinkle.userservice;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.util.ReflectionTestUtils;
+
+import com.twinkle.userservice.data.UserRepository;
+import com.twinkle.userservice.service.UserService;
+
+@ExtendWith(SpringExtension.class)
+class UserserviceTest {
+	
+	@Mock
+	private UserRepository userRepository;
+	
+	@Mock
+	private PasswordEncoder passwordEncoder;
+	
+	@InjectMocks
+	private UserService userService;
+	
+	@BeforeEach
+	public void setUp() {
+		ReflectionTestUtils.setField(userService, "userRepository", userRepository);
+		ReflectionTestUtils.setField(userService, "passwordEncoder", passwordEncoder);
+	}
+	
+}

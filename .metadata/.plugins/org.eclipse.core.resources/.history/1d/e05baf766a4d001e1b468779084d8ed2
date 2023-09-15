@@ -1,0 +1,5 @@
+package com.twinkle.bookservice;
+
+public class AxonConfig {
+
+}

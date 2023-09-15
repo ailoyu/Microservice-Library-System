@@ -1,0 +1,15 @@
+package com.twinkle.bookservice.command.command;
+
+import org.axonframework.modelling.command.TargetAggregateIdentifier;
+
+public class DeleteBookCommand {
+	@TargetAggregateIdentifier // định nghĩa bookID là định danh trong command
+	private String bookId;
+	
+
+	public DeleteBookCommand(String bookId) {
+		this.bookId = bookId;
+	}
+
+	
+}

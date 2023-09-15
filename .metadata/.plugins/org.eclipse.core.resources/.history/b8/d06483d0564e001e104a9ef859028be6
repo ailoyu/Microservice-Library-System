@@ -1,0 +1,5 @@
+package com.twinkle.notificationservice;
+
+public class EmployeeReponseModel {
+
+}

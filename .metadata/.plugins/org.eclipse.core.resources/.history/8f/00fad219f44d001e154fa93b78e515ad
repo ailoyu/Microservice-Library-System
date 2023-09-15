@@ -1,0 +1,38 @@
+package com.twinkle.userservice.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.twinkle.userservice.data.User;
+import com.twinkle.userservice.data.UserRepository;
+import com.twinkle.userservice.model.UserDTO;
+
+@Service
+public class UserService {
+	
+	@Autowired
+	private UserRepository userRepository;
+	
+
+	@Autowired
+	private PasswordEncoder passwordEncoder; // mã hóa password
+	
+	
+	public List<User> getAllUser() {
+		return userRepository.findAll();
+	}
+	
+	
+	public UserDTO saveUser(UserDTO userDTO) {
+		// mã hóa password ms lưu vào database
+		userDTO.setPassword(passwordEncoder.encode(userDTO.getPassword()));
+		
+		
+		return UserDTO.entityToDTO(userRepository.save(UserDTO.dtoToEntity(userDTO)));
+	}
+	
+	
+}

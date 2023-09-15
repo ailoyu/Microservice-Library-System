@@ -1,0 +1,5 @@
+package com.twinkle.borrowingservice.command.api.model;
+
+public class BorrowRequestModel {
+
+}

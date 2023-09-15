@@ -1,0 +1,5 @@
+package com.twinkle.borrowingservice.query.projection;
+
+public class BorrowingProjection {
+
+}

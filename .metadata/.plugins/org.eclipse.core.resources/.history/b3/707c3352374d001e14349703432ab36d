@@ -1,0 +1,5 @@
+package com.twinkle.borrowingservice.command.api.events;
+
+public class BorrowCreatedEvent {
+
+}

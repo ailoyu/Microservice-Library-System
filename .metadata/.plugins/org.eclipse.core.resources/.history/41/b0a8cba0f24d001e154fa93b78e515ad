@@ -1,0 +1,5 @@
+package com.twinkle.userservice.data;
+
+public class UserRepository {
+
+}

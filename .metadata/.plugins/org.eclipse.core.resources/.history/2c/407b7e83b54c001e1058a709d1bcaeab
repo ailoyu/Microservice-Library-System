@@ -1,0 +1,5 @@
+package com.twinkle.employeeservice.command.event;
+
+public class EmployeeDeletedEvent {
+
+}

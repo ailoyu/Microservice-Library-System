@@ -1,0 +1,5 @@
+package com.twinkle.userservice.model;
+
+public class UserDTO {
+
+}

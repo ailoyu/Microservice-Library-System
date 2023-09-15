@@ -1,0 +1,5 @@
+package com.twinkle.apigateway.configuration;
+
+public class AuthFilter {
+
+}

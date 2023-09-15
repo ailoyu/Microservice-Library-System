@@ -1,0 +1,5 @@
+package com.twinkle.bookservice.command.command;
+
+public class CreateBookCommand {
+
+}

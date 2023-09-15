@@ -1,0 +1,46 @@
+package com.twinkle.employeeservice.command.aggregate;
+
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.BeanUtils;
+
+import com.twinkle.employeeservice.command.command.CreateEmployeeCommand;
+import com.twinkle.employeeservice.command.command.DeleteEmployeeCommand;
+import com.twinkle.employeeservice.command.command.UpdateEmployeeCommand;
+import com.twinkle.employeeservice.command.event.EmployeeCreatedEvent;
+import com.twinkle.employeeservice.command.event.EmployeeDeletedEvent;
+import com.twinkle.employeeservice.command.event.EmployeeUpdatedEvent;
+
+@Aggregate
+public class EmployeeAggregate {
+	
+	@AggregateIdentifier
+	private String employeeId;
+	private String firstName;
+	private String lastName;
+	private String kin;
+	private Boolean isDisciplined;
+	
+	public EmployeeAggregate() {}
+	
+	@CommandHandler
+	public void handle(CreateEmployeeCommand command) {
+		EmployeeCreatedEvent event = new EmployeeCreatedEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
+	}
+	@CommandHandler
+	public void handle(UpdateEmployeeCommand command) {
+		EmployeeUpdatedEvent event = new EmployeeUpdatedEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
+	}
+	@CommandHandler
+	public void handle(DeleteEmployeeCommand command) {
+		EmployeeDeletedEvent event = new EmployeeDeletedEvent();
+		event.setEmployeeId(command.getEmployeeId());
+		AggregateLifecycle.apply(event);
+	}
+}

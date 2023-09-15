@@ -1,0 +1,30 @@
+package com.twinkle.employeeservice.command.aggregate;
+
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.BeanUtils;
+
+import com.twinkle.employeeservice.command.command.CreateEmployeeCommand;
+import com.twinkle.employeeservice.command.event.EmployeeCreatedEvent;
+
+@Aggregate
+public class EmployeeAggregate {
+	
+	@AggregateIdentifier
+	private String employeeId;
+	private String firstName;
+	private String lastName;
+	private String kin;
+	private Boolean isDisciplined;
+	
+	public EmployeeAggregate() {}
+	
+	@CommandHandler
+	public EmployeeAggregate(CreateEmployeeCommand command) {
+		EmployeeCreatedEvent event = new EmployeeCreatedEvent();
+		BeanUtils.copyProperties(command, event);
+		AggregateLifecycle.apply(event);
+	}
+}

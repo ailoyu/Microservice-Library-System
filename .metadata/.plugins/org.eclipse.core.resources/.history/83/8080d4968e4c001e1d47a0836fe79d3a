@@ -1,0 +1,88 @@
+package com.twinkle.bookservice.command.aggregate;
+
+import org.axonframework.commandhandling.CommandHandler;
+import org.axonframework.eventsourcing.EventSourcingHandler;
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.modelling.command.AggregateLifecycle;
+import org.axonframework.spring.stereotype.Aggregate;
+import org.springframework.beans.BeanUtils;
+
+import com.twinkle.bookservice.command.command.CreateBookCommand;
+import com.twinkle.bookservice.command.command.DeleteBookCommand;
+import com.twinkle.bookservice.command.command.UpdateBookCommand;
+import com.twinkle.bookservice.command.event.BookCreatedEvent;
+import com.twinkle.bookservice.command.event.BookDeletedEvent;
+import com.twinkle.bookservice.command.event.BookUpdatedEvent;
+
+@Aggregate
+public class BookAggregate {
+	
+	@AggregateIdentifier // 
+	private String bookId;
+	private String name;
+	private String author;
+	private Boolean isReady;
+	
+	
+	public BookAggregate() {
+	
+	}
+	
+	@CommandHandler
+	public BookAggregate (CreateBookCommand createBookCommand) {
+		// khởi tạo event tương ứng vs command (CreateBook -> BookCreated)
+		BookCreatedEvent bookCreatedEvent = new BookCreatedEvent(); 
+		// copy các field createBookCommand set vô các field của bookCreatedEvent 
+		BeanUtils.copyProperties(createBookCommand, bookCreatedEvent); 
+		// Phát đi bookCreatedEvent 
+		AggregateLifecycle.apply(bookCreatedEvent); 
+	}
+	
+	@CommandHandler
+	public void handle (UpdateBookCommand updateBookCommand) {
+		
+		BookUpdatedEvent bookUpdatedEvent = new BookUpdatedEvent(); 
+		
+		BeanUtils.copyProperties(updateBookCommand, bookUpdatedEvent); 
+		
+		AggregateLifecycle.apply(bookUpdatedEvent); 
+	}
+	
+	@CommandHandler
+	public void handle (DeleteBookCommand deleteBookCommand) {
+
+		BookDeletedEvent bookDeletedEvent = new BookDeletedEvent(); 
+
+		BeanUtils.copyProperties(deleteBookCommand, bookDeletedEvent); 
+
+		AggregateLifecycle.apply(bookDeletedEvent); 
+	}
+	
+	
+	 @EventSourcingHandler // Lưu lại lịch sử sự kiện đã cập nhật
+    public void on(BookCreatedEvent event) { 
+	// lấy dữ liệu event cập nhật cho BookAggregate -> rồi đi vào BookEventsHandler
+		this.bookId = event.getBookId();
+		this.author = event.getAuthor();
+		this.isReady = event.getIsReady();
+		this.name = event.getName();
+    }
+	 
+	 @EventSourcingHandler // Lưu lại lịch sử sự kiện đã cập nhật
+	    public void on(BookUpdatedEvent event) { 
+		// lấy dữ liệu event cập nhật cho BookAggregate -> rồi đi vào BookEventsHandler
+			this.bookId = event.getBookId();
+			this.author = event.getAuthor();
+			this.isReady = event.getIsReady();
+			this.name = event.getName();
+	    }
+	 
+	 @EventSourcingHandler // Lưu lại lịch sử sự kiện đã cập nhật
+	    public void on(BookDeletedEvent event) { 
+		// lấy dữ liệu event cập nhật cho BookAggregate -> rồi đi vào BookEventsHandler
+			this.bookId = event.getBookId();
+	    }
+	 	
+	
+	
+}

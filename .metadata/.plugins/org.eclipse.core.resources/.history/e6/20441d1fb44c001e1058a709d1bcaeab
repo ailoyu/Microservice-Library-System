@@ -1,0 +1,5 @@
+package com.twinkle.employeeservice.command.command;
+
+public class CreateEmployeeCommand {
+
+}

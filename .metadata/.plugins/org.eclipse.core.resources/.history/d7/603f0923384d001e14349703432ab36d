@@ -1,0 +1,21 @@
+package com.twinkle.borrowingservice.command.api.aggregate;
+
+import java.util.Date;
+
+import org.axonframework.modelling.command.AggregateIdentifier;
+import org.axonframework.spring.stereotype.Aggregate;
+
+@Aggregate
+public class BorrowAggregate {
+	
+	@AggregateIdentifier
+	private String id;
+	
+	private String bookId;
+	private String employeeId;
+	private Date borrowingDate;
+	private Date returnDate;
+	
+	private String message;
+	public BorrowAggregate() {}
+}

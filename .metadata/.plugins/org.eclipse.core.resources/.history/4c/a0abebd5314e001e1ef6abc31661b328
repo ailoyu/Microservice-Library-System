@@ -1,0 +1,50 @@
+package com.twinkle.userservice;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.web.client.RestTemplate;
+
+import com.google.gson.Gson;
+import com.twinkle.userservice.data.User;
+import com.twinkle.userservice.data.UserRepository;
+
+@SpringBootTest(webEnvironment=SpringBootTest.WebEnvironment.RANDOM_PORT, properties="application.properties")
+class IntergrationTest {
+	
+	@LocalServerPort
+	private int port;
+	
+	private static RestTemplate restTemplate; // công cụ gọi RESTFUL API
+	
+	@MockBean
+	UserRepository userRepository;
+	
+	private User user;
+	
+	Gson gson = new Gson();
+	private String baseUrl = "http://localhost";
+	
+	@BeforeAll
+	public static void init() {
+		restTemplate = new RestTemplate();
+	}
+	
+	@BeforeEach
+	public void setUp() {
+		user = new User(1L,"dev@gmail.com","123456","employeeID");
+		baseUrl = baseUrl.concat(":").concat(port+"").concat("/api/v1/users");
+	}
+	
+	@Test
+	void shouldGetAllUser() { // test API GetAllUser()
+		List<User> users = new ArrayList<>();
+		users.add(user);
+	}
+}

@@ -1,0 +1,8 @@
+package com.twinkle.userservice;
+
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest()
+class IntergrationTest {
+	
+}

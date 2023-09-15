@@ -1,0 +1,8 @@
+package com.twinkle.employeeservice.query.projection;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class EmployeeProjection {
+	
+}
